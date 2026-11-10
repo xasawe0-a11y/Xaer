@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SATR | سَطْر</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0B1F3A;--navy2:#143358;--gold:#C9A24B;--bg:#F7F5EF;--card:#fff;--ink:#12263F;--mut:#5D6B7E;--ok:#1E8E5A;--bad:#C0392B;--line:#E3DFD3;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#08172B;--card:#0F2646;--ink:#EEF1F6;--mut:#9AA9BE;--line:#1F3A60}}
+:root[data-theme="dark"]{--bg:#08172B;--card:#0F2646;--ink:#EEF1F6;--mut:#9AA9BE;--line:#1F3A60}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans Arabic",Tahoma,sans-serif;line-height:1.8}
+a{color:inherit}
+.wrap{max-width:1040px;margin:auto;padding:0 16px}
+header{background:var(--navy);color:#fff;position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--navy);z-index:10}
+header .wrap{display:flex;align-items:center;gap:12px;justify-content:space-between;padding-block:10px}
+.logo{font-weight:700;font-size:22px;letter-spacing:1px;cursor:pointer}.logo b{color:var(--gold)}
+nav{display:flex;gap:4px;overflow-x:auto;max-width:100%}
+nav a{padding:6px 12px;border-radius:99px;font-size:14px;text-decoration:none;white-space:nowrap;color:#D5DDEA;cursor:pointer}
+nav a.on,nav a:hover{background:var(--gold);color:var(--navy)}
+.btn{border:0;border-radius:12px;padding:10px 20px;font:inherit;font-weight:700;cursor:pointer;background:var(--gold);color:var(--navy);transition:transform .15s}
+.btn:active{transform:scale(.97)}.btn.alt{background:transparent;border:1.5px solid var(--gold);color:var(--gold)}
+.btn.ok{background:var(--ok);color:#fff}.btn.bad{background:var(--bad);color:#fff}.btn.sm{padding:4px 12px;font-size:13px}
+.btn:focus-visible,input:focus-visible,select:focus-visible,nav a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.hero{background:linear-gradient(160deg,var(--navy),var(--navy2));color:#fff;padding:48px 0 56px}
+.hero .wrap{display:grid;gap:32px;grid-template-columns:1.1fr .9fr;align-items:center}
+.hero h1{font-size:clamp(34px,6vw,56px);margin:0;line-height:1.3}.hero h1 span{display:block;color:var(--gold);font-size:.55em;font-weight:500}
+.hero p{color:#C7D2E3;max-width:46ch}
+.read{background:#FBF9F3;color:#1A2B45;border-radius:16px;padding:22px 24px;box-shadow:0 18px 40px #0006;font-size:17px}
+.read .ln{border-bottom:1.5px solid #D9D2BC;padding:2px 0;opacity:.35}
+.read .ln.hot{opacity:1;background:linear-gradient(transparent 60%,#C9A24B55 60%);animation:sweep 6s infinite}
+@keyframes sweep{0%,100%{opacity:.35}30%,60%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.read .ln.hot{animation:none;opacity:1}}
+section{padding:36px 0}h2{margin:0 0 16px;font-size:26px}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 2px 10px #0B1F3A12}
+.plan{border-top:4px solid var(--gold)}.plan.feat{border-top-color:var(--navy);outline:2px solid var(--gold)}
+.price{font-size:30px;font-weight:700}.price small{font-size:14px;color:var(--mut);font-weight:400}
+.muted{color:var(--mut);font-size:14px}
+.stat{font-size:24px;font-weight:700}
+.tag{display:inline-block;padding:1px 10px;border-radius:99px;font-size:12px;font-weight:700}
+.t-ok{background:#1E8E5A22;color:var(--ok)}.t-w{background:#C9A24B33;color:#8A6A1B}.t-bad{background:#C0392B22;color:var(--bad)}
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;margin-bottom:8px}summary{cursor:pointer;font-weight:700}
+label{display:block;font-weight:500;margin:12px 0 4px}
+input,select,textarea{width:100%;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;font:inherit;background:var(--bg);color:var(--ink)}
+.form{max-width:440px;margin:32px auto}
+.warn{background:#C0392B14;border:1px solid var(--bad);color:var(--bad);border-radius:10px;padding:10px 12px;margin-top:12px;font-size:14px}
+.note{background:#C9A24B22;border-radius:10px;padding:10px 14px;font-size:14px;margin-bottom:16px}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:8px;text-align:right;border-bottom:1px solid var(--line)}
+.scroll{overflow-x:auto}
+.task{display:flex;gap:12px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}.task p{margin:4px 0;max-width:60ch}
+#toast{position:fixed;inset-inline:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));max-width:420px;margin:auto;padding:12px 16px;border-radius:12px;color:#fff;font-weight:700;transform:translateY(150%);transition:transform .3s;z-index:20}
+#toast.show{transform:none}
+footer{background:var(--navy);color:#9FB0C8;padding:24px 0;font-size:14px;margin-top:32px}
+@media(max-width:720px){.hero .wrap{grid-template-columns:1fr}header .wrap{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="logo" onclick="go('home')" tabindex="0">SATR <b>سَطْر</b></div>
+<nav id="nav" aria-label="التنقل"></nav>
+</div></header>
+<main id="app"></main>
+<footer><div class="wrap">SATR | سَطْر — Read, Complete, Earn.</div></footer>
+<div id="toast" role="status"></div>
+<script>
+const fmt=n=>Number(n).toLocaleString('ar-SY')+' ل.س';
+const PLANS=[{id:1,name:'المستوى الأول',price:50000,dep:5000,tasks:1,reward:170,inv:500},{id:2,name:'المستوى الثاني',price:120000,dep:12000,tasks:2,reward:200,inv:1000},{id:3,name:'المستوى الثالث',price:360000,dep:36000,tasks:3,reward:400,inv:5000}];
+const TASKS=[
+ {id:1,t:'الحرف العربي عبر القرون',lv:1},{id:2,t:'فن الخط الكوفي',lv:2},{id:3,t:'رحلة الكتاب المطبوع',lv:3}
+].map(x=>({...x,body:['اقرأ هذه الأسطر الخمسة بتمعّن، ثم اضغط إتمام المهمة.','تتغير النصوص يومياً بحسب ما تضيفه الإدارة.','كل مهمة مموّلة من رعاة أو إعلانات داخل النص.','تُحتسب المهمة مرة واحدة فقط في اليوم نفسه.','المكافأة صغيرة وثابتة وتظهر قبل البدء.']}));
+const S={user:null,admin:false,seq:10002,settings:{tg:'satr_support',sc:'DEMO-SHAMCASH-CODE',min:10000,day:'الخميس',ap:'SATR@2026'},
+ users:[{id:'SA10001',name:'سارة',pw:'demo1234',phone:'0991111111',plan:2,status:'active',bal:1200,hold:0,done:[],code:'SATR10001',inv:[]},{id:'SA10002',name:'ياسر',pw:'demo1234',phone:'0992222222',plan:1,status:'pending',bal:0,hold:0,done:[],code:'SATR10002',inv:[]}],
+ wd:[{id:'W1001',u:'SA10001',name:'سارة',phone:'0991111111',amt:10000,owner:'سارة أ.',code:'SC-48213',date:'2026-11-03',st:'review',note:''}],
+ log:[{u:'SA10001',d:'2026-11-02',k:'إيداع (تجريبي)',a:1200}]};
+const $=s=>document.querySelector(s);
+function toast(m,ok=true){if(ok)save();const t=$('#toast');t.textContent=m;t.style.background=ok?'var(--ok)':'var(--bad)';t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2600)}
+const me=()=>S.user&&S.users.find(u=>u.id===S.user);
+const plan=u=>PLANS.find(p=>p.id===u.plan);
+const today=()=>new Date().toISOString().slice(0,10);
+function go(p){location.hash=p;}
+const PUB=[['home','الرئيسية'],['login','دخول'],['register','حساب جديد']];
+const USR=[['dash','الرئيسية'],['tasks','المهام'],['levels','المستويات'],['refs','الدعوات'],['wallet','المحفظة'],['deposit','شحن'],['withdraw','سحب'],['history','السجل'],['profile','حسابي']];
+function render(){
+ const p=(location.hash||'#home').slice(1),u=me();
+ const items=S.admin?[['admin','الإدارة']]:u?USR:PUB;
+ $('#nav').innerHTML=items.map(([k,l])=>`<a href="#${k}" class="${p===k?'on':''}">${l}</a>`).join('')+(u||S.admin?'<a id="out">خروج</a>':'<a href="#admin-login">الإدارة</a>');
+ const o=$('#out');if(o)o.onclick=()=>{S.user=null;S.admin=false;go('home')};
+ const gated=['dash','tasks','levels','refs','wallet','deposit','withdraw','history','profile'];
+ if(gated.includes(p)&&!u){return go('login')}
+ const need=['tasks','wallet','withdraw'];
+ if(u&&u.status!=='active'&&need.includes(p)){$('#app').innerHTML=`<div class="wrap"><div class="card form"><h2>حسابك قيد المراجعة</h2><p>لا يمكن استخدام المهام أو المحفظة قبل موافقة الإدارة.</p></div></div>`;return}
+ if(p==='admin'&&!S.admin)return go('admin-login');
+ (V[p]||V.home)();window.scrollTo(0,0)
+}
+const V={
+home(){$('#app').innerHTML=`
+<div class="hero"><div class="wrap"><div><h1>SATR <span>اقرأ، أنجز، واكسب.</span></h1>
+<p>منصة عربية للقراءة اليومية: أنجز مهام قراءة قصيرة واكسب مكافآت صغيرة مموّلة من رعاة وإعلانات داخل المحتوى.</p>
+<p><button class="btn" onclick="go('register')">إنشاء حساب</button> <button class="btn alt" onclick="go('login')">تسجيل الدخول</button></p></div>
+<div class="read" aria-hidden="true"><div class="ln">كل يوم نص جديد، خمسة أسطر فقط،</div><div class="ln">تقرؤه بهدوء ثم تضغط إتمام.</div><div class="ln hot">مكافأتك تُضاف إلى محفظتك فوراً،</div><div class="ln">ويمكنك سحبها أسبوعياً عبر شام كاش.</div><div class="ln">بلا وعود أرباح مضمونة.</div></div></div></div>
+<section><div class="wrap"><h2>مستويات العضوية</h2><div class="grid">${planCards(false)}</div></div></section>
+<section><div class="wrap"><h2>كيف تعمل المنصة</h2><div class="grid">
+<div class="card"><b>سجّل حسابك</b><p class="muted">أدخل رقم هاتفك وكلمة مرور، وتنتظر موافقة الإدارة.</p></div>
+<div class="card"><b>اقرأ وأنجز</b><p class="muted">أكمل مهامك اليومية حسب مستواك، مرة واحدة لكل مهمة.</p></div>
+<div class="card"><b>اسحب أسبوعياً</b><p class="muted">اطلب السحب إلى شام كاش، وتراجعه الإدارة وتسجّل الدفع.</p></div></div></div></section>
+<section><div class="wrap"><h2>الأسئلة الشائعة</h2>
+<details><summary>هل الأرباح مضمونة؟</summary><p>لا. المكافآت صغيرة وتعتمد على إيرادات الرعاة والإعلانات المتاحة.</p></details>
+<details><summary>متى أستطيع السحب؟</summary><p>مرة أسبوعياً في يوم تحدده الإدارة، بعد بلوغ الحد الأدنى.</p></details>
+<details><summary>كيف أتواصل مع الدعم؟</summary><p><a href="${tgl()}" target="_blank" rel="noopener">راسلنا على تلغرام</a></p></details></div></section>`},
+register(){$('#app').innerHTML=`<div class="wrap"><form class="card form" onsubmit="return reg(event)"><h2>إنشاء حساب</h2>
+<label>اسمك</label><input id="nm" required maxlength="40" placeholder="الاسم الذي سيظهر لدى الإدارة"><label>رقم الهاتف</label><input id="ph" inputmode="numeric" required pattern="09[0-9]{8}" placeholder="09xxxxxxxx">
+<label>كلمة المرور</label><input id="pw" type="password" minlength="8" required>
+<label>تأكيد كلمة المرور</label><input id="pw2" type="password" required>
+<label>كود الدعوة (اختياري)</label><input id="rc" placeholder="SATR10001">
+<p><button class="btn" style="width:100%">إنشاء حساب</button></p></form></div>`},
+login(){$('#app').innerHTML=`<div class="wrap"><form class="card form" onsubmit="return login(event)"><h2>تسجيل الدخول</h2>
+<label>رقم الهاتف</label><input id="ph" required><label>كلمة المرور</label><input id="pw" type="password" required>
+<p><button class="btn" style="width:100%">دخول</button></p><p class="muted">نسيت كلمة المرور؟ تُرسل الإدارة رابط استعادة بعد التحقق من هويتك عبر تلغرام.</p></form></div>`},
+'admin-login'(){$('#app').innerHTML=`<div class="wrap"><form class="card form" onsubmit="return adminLogin(event)"><h2>دخول الإدارة</h2><label>كلمة مرور الإدارة</label><input id="ap" type="password" required><p><button class="btn">دخول</button></p></form></div>`},
+dash(){const u=me(),p=plan(u);const earned=S.log.filter(l=>l.u===u.id&&l.k==='مهمة').reduce((a,b)=>a+b.a,0);
+$('#app').innerHTML=`<div class="wrap"><section><h2>أهلاً ${esc(u.name)}</h2>
+<div class="grid">${[['رقم الحساب',u.id],['الهاتف',u.phone],['المستوى',p.name],['الحالة',u.status==='active'?'<span class="tag t-ok">نشط</span>':'<span class="tag t-w">معلّق</span>'],['الرصيد الإجمالي',fmt(u.bal+u.hold)],['المتاح',fmt(u.bal)],['المحجوز',fmt(u.hold)],['أرباح المهام',fmt(earned)],['مهام مكتملة',u.done.length],['الأصدقاء المدعوون',u.inv.length]].map(([a,b])=>`<div class="card"><div class="muted">${a}</div><div class="stat">${b}</div></div>`).join('')}</div></section></div>`},
+tasks(){const u=me(),p=plan(u),d=today();
+ const list=TASKS.filter(t=>t.lv<=u.plan).slice(0,p.tasks);
+ $('#app').innerHTML=`<div class="wrap"><section><h2>المهام اليومية</h2><p class="muted">مهامك اليوم: ${p.tasks}. المكافأة ${fmt(p.reward)} لكل مهمة.</p>
+ ${list.map(t=>{const dn=u.done.includes(t.id+d);return `<div class="card" style="margin-bottom:12px"><div class="task"><div><b>${esc(t.t)}</b>${t.body.map(l=>`<p>${esc(l)}</p>`).join('')}</div>
+ <div><div class="tag t-w">${fmt(p.reward)}</div><p><button class="btn ${dn?'':'ok'}" ${dn?'disabled':''} onclick="doTask(${t.id})">${dn?'تمت اليوم':'إتمام المهمة'}</button></p></div></div></div>`}).join('')}</section></div>`},
+levels(){$('#app').innerHTML=`<div class="wrap"><section><h2>مستويات العضوية</h2><div class="note">المكافآت اليومية أدناه هي القيمة الفعلية لكل مهمة، وليست أرباحاً مضمونة. وتعتمد على تمويل الرعاة.</div><div class="grid">${planCards(true)}</div></section></div>`},
+refs(){const u=me(),link=location.href.split('#')[0]+'?ref='+u.code,act=u.inv.filter(i=>i.ok).length;
+$('#app').innerHTML=`<div class="wrap"><section><h2>دعوة الأصدقاء</h2><div class="card"><div class="muted">كود الدعوة</div><div class="stat">${u.code}</div>
+<label>غيّر الكود كما تريد (حروف إنجليزية وأرقام)</label><div style="display:flex;gap:8px;margin-bottom:12px"><input id="nc" value="${u.code}" dir="ltr" maxlength="20"><button class="btn sm" onclick="setCode()">حفظ</button></div>
+<p dir="ltr" class="muted" style="text-align:right">${link}</p><button class="btn" onclick="navigator.clipboard&&navigator.clipboard.writeText('${u.code}');toast('تم نسخ الكود')">نسخ الكود</button>
+<button class="btn alt" onclick="navigator.share?navigator.share({url:'${link}'}):toast('انسخ الرابط يدوياً')">مشاركة الرابط</button></div>
+<div class="grid" style="margin-top:16px"><div class="card"><div class="muted">المدعوون</div><div class="stat">${u.inv.length}</div></div><div class="card"><div class="muted">المفعّلون</div><div class="stat">${act}</div></div><div class="card"><div class="muted">المكافآت</div><div class="stat">${fmt(u.inv.filter(i=>i.ok).length*plan(u).inv)}</div></div></div>
+<p class="muted">المكافأة رمزية، تُضاف مرة واحدة لكل حساب بعد تفعيل الإدارة، ولا ترتبط بدفع المدعو. الدعوة الذاتية مرفوضة.</p></section></div>`},
+wallet(){const u=me();$('#app').innerHTML=`<div class="wrap"><section><h2>المحفظة</h2><div class="grid"><div class="card"><div class="muted">الإجمالي</div><div class="stat">${fmt(u.bal+u.hold)}</div></div><div class="card"><div class="muted">المتاح</div><div class="stat">${fmt(u.bal)}</div></div><div class="card"><div class="muted">المحجوز</div><div class="stat">${fmt(u.hold)}</div></div></div>
+<p class="muted">الرصيد يتغير فقط عبر سجل معاملات تسجّله الخدمة، ولا يعدّله المستخدم.</p></section></div>`},
+deposit(){const u=me(),sc=S.settings.sc,d=PLANS;$('#app').innerHTML=`<div class="wrap"><section><div class="card form" style="max-width:520px"><h2>شحن الرصيد</h2>
+${sc?`<div class="muted">كود شام كاش للإيداع</div><div class="stat" dir="ltr" style="text-align:right;user-select:all">${esc(sc)}</div><p><button class="btn" style="width:100%" data-c="${esc(sc)}" onclick="cp(this.dataset.c,'تم نسخ كود شام كاش')">نسخ الكود</button></p>`:`<div class="note">لم تحدد الإدارة كود الإيداع بعد. تواصل مع فريق الدعم للحصول عليه.</div>`}
+<div class="note"><b>تعليمات الشحن</b><br>عند الشحن علّق باسم حسابك كما هو مسجّل بالمنصة (<b>${esc(u.name)}</b>) من أي حساب شام كاش، وحوّل المبلغ الذي تريده لتفعيل المستوى. وبعد التحويل راسل الدعم ليُفعَّل مستواك.</div>
+<div class="scroll"><table>${d.map(p=>`<tr><td>${esc(p.name)}</td><td><b>${fmt(p.dep)}</b></td></tr>`).join('')}</table></div>
+<p style="margin-top:16px"><a class="btn ok" style="display:block;text-align:center;text-decoration:none" href="${tgl()}" target="_blank" rel="noopener">استفسار؟ راسلنا على تلغرام</a></p></div></section></div>`},
+withdraw(){const u=me();$('#app').innerHTML=`<div class="wrap"><section><form class="card form" onsubmit="return wdr(event)"><h2>سحب الأرباح</h2>
+<p class="muted">المتاح: <b>${fmt(u.bal)}</b> · الحد الأدنى: ${fmt(S.settings.min)} · السحب كل ${S.settings.day}</p>
+<label>المبلغ</label><input id="am" type="number" required><label>اسم صاحب حساب شام كاش</label><input id="on" required>
+<label>كود شام كاش</label><input id="c1" required><label>تأكيد كود شام كاش</label><input id="c2" required>
+<div class="warn">⚠️ يرجى التأكد من كود شام كاش جيداً قبل إرسال طلب السحب، والتأكد من أن الكود يعود إلى الحساب الصحيح.</div>
+<p><button class="btn" style="width:100%">طلب سحب الأرباح</button></p></form></section></div>`},
+history(){const u=me();$('#app').innerHTML=`<div class="wrap"><section><h2>سجل العمليات</h2><div class="card scroll"><table><tr><th>التاريخ</th><th>العملية</th><th>المبلغ</th></tr>${S.log.filter(l=>l.u===u.id).reverse().map(l=>`<tr><td>${l.d}</td><td>${l.k}</td><td style="color:${l.a<0?'var(--bad)':'var(--ok)'}">${fmt(l.a)}</td></tr>`).join('')||'<tr><td colspan=3>لا عمليات بعد. أنجز مهمتك الأولى.</td></tr>'}</table></div></section></div>`},
+profile(){const u=me();$('#app').innerHTML=`<div class="wrap"><section><div class="card form"><h2>حسابي</h2><p>رقم الحساب: <b>${u.id}</b></p><p>الهاتف: <b>${u.phone}</b></p><p>المستوى: <b>${plan(u).name}</b></p></div></section></div>`},
+admin(){const q=(window.AQ||'').trim(),et=TASKS.find(t=>t.id===window.ET)||{};
+ const wds=S.wd.filter(w=>!q||[w.name,w.phone,w.id].some(x=>x.includes(q)));
+ $('#app').innerHTML=`<div class="wrap"><section><h2>لوحة الإدارة</h2>
+ <div class="grid">${[['المستخدمون',S.users.length],['النشطة',S.users.filter(u=>u.status==='active').length],['المعلّقة',S.users.filter(u=>u.status==='pending').length],['طلبات السحب',S.wd.length]].map(([a,b])=>`<div class="card"><div class="muted">${a}</div><div class="stat">${b}</div></div>`).join('')}</div>
+ <h2 style="margin-top:28px">إدارة المستخدمين</h2>${window.RP?`<div class="note">كلمة المرور المؤقتة للحساب ${window.RP.id}: <b dir="ltr">${window.RP.p}</b> — سلّمها للعميل ليغيّرها فور دخوله.</div>`:''}<div class="card scroll"><table><tr><th>الحساب</th><th>الاسم</th><th>الهاتف</th><th>المستوى</th><th>الحالة</th><th></th></tr>
+ ${S.users.map(u=>`<tr><td>${u.id}</td><td>${esc(u.name)}</td><td>${u.phone}</td><td><select onchange="setPlan('${u.id}',this.value)" style="min-width:130px">${PLANS.map(p=>`<option value="${p.id}" ${p.id===u.plan?'selected':''}>${p.name}</option>`).join('')}</select></td><td>${u.status==='active'?'نشط':u.status==='pending'?'معلّق':'موقوف'}</td>
+ <td><button class="btn ok sm" onclick="setU('${u.id}','active')">تفعيل</button> <button class="btn bad sm" onclick="setU('${u.id}','suspended')">تعليق</button> <button class="btn alt sm" onclick="resetPw('${u.id}')">كلمة مرور جديدة</button> <button class="btn bad sm" onclick="delU('${u.id}')">${window.DC===u.id?'تأكيد الحذف':'حذف'}</button></td></tr>`).join('')}</table></div>
+ <h2 style="margin-top:28px">إدارة طلبات السحب</h2><input placeholder="بحث بالاسم أو الهاتف أو رقم الطلب" value="${q}" oninput="window.AQ=this.value;V.admin();document.querySelector('input').focus()" style="margin-bottom:12px">
+ <input id="rj" placeholder="سبب الرفض (يُسجَّل عند الضغط على رفض)" style="margin-bottom:12px"><div class="card scroll"><table><tr><th>الطلب</th><th>العميل</th><th>الهاتف</th><th>المبلغ</th><th>شام كاش</th><th>الحالة</th><th></th></tr>
+ ${wds.map(w=>`<tr><td>${w.id}</td><td>${esc(w.name)}</td><td>${w.phone}</td><td>${fmt(w.amt)}</td><td>${esc(w.owner)}<br><span style="user-select:all" dir="ltr">${esc(w.code)}</span> <button class="btn alt sm" onclick="copyC('${w.id}')">نسخ</button></td>
+ <td><span class="tag ${{review:'t-w',accepted:'t-ok',rejected:'t-bad',paid:'t-ok'}[w.st]}">${{review:'قيد المراجعة',accepted:'مقبول',rejected:'مرفوض',paid:'تم الدفع'}[w.st]}</span>${w.note?'<br><small>'+w.note+'</small>':''}</td>
+ <td>${w.st==='review'?`<button class="btn ok sm" onclick="wst('${w.id}','accepted')">قبول</button> <button class="btn bad sm" onclick="wst('${w.id}','rejected')">رفض</button>`:w.st==='accepted'?`<button class="btn sm" onclick="wst('${w.id}','paid')">تم الدفع</button>`:''}</td></tr>`).join('')}</table></div>
+ <h2 style="margin-top:28px">إدارة المهام والنصوص</h2><div class="card"><label>عنوان المهمة</label><input id="tt" value="${esc(et.t||'')}"><label>تظهر من المستوى</label><select id="tl">${PLANS.map(p=>`<option value="${p.id}" ${p.id===(et.lv||1)?'selected':''}>${p.name} وما فوقه</option>`).join('')}</select><label>النص المراد قراءته (كل سطر في سطر جديد)</label><textarea id="tb" rows="6">${esc((et.body||[]).join('\n'))}</textarea><p><button class="btn" onclick="saveT()">${et.id?'حفظ التعديل':'إضافة المهمة'}</button> ${et.id?'<button class="btn alt sm" onclick="window.ET=null;V.admin()">إلغاء</button>':''}</p></div>
+ <div class="card scroll" style="margin-top:12px"><table><tr><th>العنوان</th><th>المستوى</th><th></th></tr>${TASKS.map(t=>`<tr><td>${esc(t.t)}</td><td>${PLANS.find(p=>p.id===t.lv).name}</td><td><button class="btn sm" onclick="editT(${t.id})">تعديل</button> <button class="btn bad sm" onclick="delT(${t.id})">${window.DT===t.id?'تأكيد الحذف':'حذف'}</button></td></tr>`).join('')||'<tr><td colspan=3>لا مهام</td></tr>'}</table></div>
+ <h2 style="margin-top:28px">الإعدادات</h2><div class="card"><label>معرّف تلغرام للدعم (بدون @)</label><input id="sw" value="${S.settings.tg}" dir="ltr"><label>كود شام كاش للإيداع (اختياري)</label><input id="ssc" value="${esc(S.settings.sc||'')}" dir="ltr"><label>الحد الأدنى للسحب</label><input id="sm" type="number" value="${S.settings.min}"><label>كلمة مرور الإدارة الجديدة (اتركها فارغة بلا تغيير)</label><input id="np" type="password" minlength="8">
+ <label>Bot Token (يُخزَّن على الخادم فقط)</label><input type="password" placeholder="غير مفعّل في النسخة التجريبية"><p><button class="btn" onclick="S.settings.tg=$('#sw').value.replace(/[^A-Za-z0-9_]/g,'');S.settings.sc=$('#ssc').value.trim();S.settings.min=+$('#sm').value;if($('#np').value.length>=8){S.settings.ap=$('#np').value;$('#np').value=''}toast('تم حفظ الإعدادات')">حفظ</button></p></div></section></div>`}
+};
+function planCards(pick){return PLANS.map(p=>`<div class="card plan ${p.id===2?'feat':''}"><b>${p.name}</b><div class="price">${fmt(p.price)}</div>
+<p>${p.tasks} ${p.tasks===1?'مهمة':'مهام'} يومياً<br>مكافأة ${fmt(p.reward)} لكل مهمة<br><span class="muted">مكافأة دعوة رمزية: ${fmt(p.inv)}</span></p>
+<button class="btn" onclick="${pick?`openTG(${p.id})`:`go('register')`}">${pick?'اختيار المستوى':'ابدأ من هنا'}</button></div>`).join('')}
+const tgl=()=>'https://t.me/'+S.settings.tg;
+function cp(t,msg){const ok=()=>toast(msg||('تم النسخ: '+t)),fb=()=>{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();let r=false;try{r=document.execCommand('copy')}catch(e){}a.remove();r?ok():toast('انسخ يدوياً: '+t,false)};navigator.clipboard?navigator.clipboard.writeText(t).then(ok,fb):fb()}
+function normC(v){v=String(v).trim();const m=v.match(/ref=([^&\s#]+)/i);if(m)v=decodeURIComponent(m[1]);v=v.replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));return v.toUpperCase().replace(/[\s-]+/g,'')}
+function openTG(id){const u=me(),pid=id||+($('#dl')||{}).value||1,p=PLANS.find(x=>x.id===pid);
+ cp(`مرحباً، أريد الاشتراك/الترقية.\nالاسم: ${u.name}\nرقم الحساب: ${u.id}\nالمستوى المطلوب: ${p.name}\nالمبلغ: ${p.price} ل.س`,'تم نسخ رسالتك، الصقها في محادثة تلغرام');
+ window.open(tgl(),'_blank','noopener')}
+function setCode(){const u=me(),c=normC($('#nc').value);
+ if(!/^[A-Z0-9_]{4,20}$/.test(c))return toast('الكود: 4 إلى 20 حرفاً إنجليزياً أو رقماً أو _',false);
+ if(S.users.some(x=>x.code===c&&x.id!==u.id))return toast('هذا الكود مستخدم، اختر غيره',false);
+ u.code=c;toast('تم تغيير الكود إلى '+c);V.refs()}
+function reg(e){e.preventDefault();const ph=$('#ph').value,pw=$('#pw').value,nm=$('#nm').value.trim();if(!nm)return toast('أدخل اسمك',false),false;
+ if(pw!==$('#pw2').value)return toast('كلمتا المرور غير متطابقتين',false),false;
+ if(S.users.some(u=>u.phone===ph))return toast('الرقم مسجّل مسبقاً',false),false;
+ const n=++S.seq,rc=normC($('#rc').value),ref=S.users.find(u=>u.code===rc);
+ if(rc&&!ref)return toast('كود الدعوة غير صحيح',false),false;
+ const u={id:'SA'+n,name:nm,pw,phone:ph,plan:1,status:'pending',bal:0,hold:0,done:[],code:'SATR'+n,inv:[]};
+ S.users.push(u);if(ref)ref.inv.push({id:u.id,ok:false});
+ S.user=u.id;toast('تم إنشاء الحساب. بانتظار موافقة الإدارة');go('dash');return false}
+function login(e){e.preventDefault();const u=S.users.find(x=>x.phone===$('#ph').value);
+ if(!u)return toast('الرقم غير مسجّل',false),false;if(u.pw!==$('#pw').value)return toast('كلمة المرور غير صحيحة',false),false;S.user=u.id;go('dash');return false}
+function doTask(id){const u=me(),k=id+today();if(u.done.includes(k))return toast('أُنجزت هذه المهمة اليوم',false);
+ u.done.push(k);const r=plan(u).reward;u.bal+=r;S.log.push({u:u.id,d:today(),k:'مهمة',a:r});toast('أحسنت! أُضيفت '+fmt(r)+' إلى رصيدك');V.tasks()}
+function wdr(e){e.preventDefault();const u=me(),a=+$('#am').value;
+ if($('#c1').value!==$('#c2').value)return toast('كودا شام كاش غير متطابقين',false),false;
+ if(a<S.settings.min)return toast('الحد الأدنى '+fmt(S.settings.min),false),false;
+ if(a>u.bal)return toast('المبلغ أكبر من الرصيد المتاح',false),false;
+ u.bal-=a;u.hold+=a;const id='W'+(1000+S.wd.length+1);
+ S.wd.push({id,u:u.id,name:u.name,phone:u.phone,amt:a,owner:$('#on').value,code:$('#c1').value,date:today(),st:'review',note:''});
+ S.log.push({u:u.id,d:today(),k:'حجز سحب '+id,a:-a});toast('أُرسل طلبك '+id+' إلى الإدارة');go('history');return false}
+function setU(id,st){const u=S.users.find(x=>x.id===id);const was=u.status;u.status=st;
+ if(st==='active'&&was!=='active'){const r=S.users.find(x=>x.inv.some(i=>i.id===id&&!i.ok));if(r){r.inv.find(i=>i.id===id).ok=true;r.bal+=plan(r).inv;S.log.push({u:r.id,d:today(),k:'مكافأة دعوة',a:plan(r).inv})}}
+ toast('تم تحديث الحساب');V.admin()}
+function wst(id,st){const w=S.wd.find(x=>x.id===id),u=S.users.find(x=>x.id===w.u);
+ if(st==='rejected'){const n=($('#rj')||{}).value;u.hold-=w.amt;u.bal+=w.amt;w.note=n||'';S.log.push({u:u.id,d:today(),k:'إعادة مبلغ '+id,a:w.amt})}
+ if(st==='paid'){u.hold-=w.amt;w.note='دُفع '+today()}
+ w.st=st;toast('تم تحديث الطلب');V.admin()}
+function adminLogin(e){e.preventDefault();if($('#ap').value!==S.settings.ap)return toast('كلمة المرور غير صحيحة',false),false;S.admin=true;go('admin');return false}
+function setPlan(id,p){const u=S.users.find(x=>x.id===id);u.plan=+p;toast('تم تغيير المستوى إلى '+plan(u).name)}
+function delU(id){if(window.DC!==id){window.DC=id;toast('اضغط «تأكيد الحذف» مرة ثانية لحذف '+id,false);V.admin();return}window.DC=null;S.users=S.users.filter(x=>x.id!==id);S.wd=S.wd.filter(w=>w.u!==id||w.st==='paid');S.log=S.log.filter(l=>l.u!==id);S.users.forEach(x=>{x.inv=x.inv.filter(i=>i.id!==id)});toast('تم حذف الحساب');V.admin()}
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function saveT(){const t=$('#tt').value.trim(),b=$('#tb').value.split('\n').map(x=>x.trim()).filter(Boolean);if(!t||!b.length)return toast('أدخل العنوان والنص',false);const lv=+$('#tl').value,ex=TASKS.find(x=>x.id===window.ET);if(ex){ex.t=t;ex.lv=lv;ex.body=b}else TASKS.push({id:Date.now(),t,lv,body:b});window.ET=null;toast('تم حفظ المهمة');V.admin()}
+function copyC(id){const w=S.wd.find(x=>x.id===id),t=w.code,ok=()=>toast('تم نسخ الكود '+t);const fb=()=>{const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();let r=false;try{r=document.execCommand('copy')}catch(e){}a.remove();r?ok():toast('انسخ الكود يدوياً: '+t,false)};if(navigator.clipboard)navigator.clipboard.writeText(t).then(ok,fb);else fb()}
+function resetPw(id){const u=S.users.find(x=>x.id===id),p='S'+Math.random().toString(36).slice(2,9);u.pw=p;window.RP={id,p};save();V.admin()}
+function editT(id){window.ET=id;V.admin();$('#tt').scrollIntoView({block:'center'})}
+function delT(id){if(window.DT!==id){window.DT=id;toast('اضغط «تأكيد الحذف» مرة ثانية',false);V.admin();return}window.DT=null;const i=TASKS.findIndex(t=>t.id===id);if(i>-1)TASKS.splice(i,1);toast('تم حذف المهمة');V.admin()}
+addEventListener('hashchange',render);
+/* ===== حفظ البيانات في JSONBin (للتجربة فقط) ===== */
+/* بيانات JSONBin للتجربة فقط: لا ترفع هذا الملف في مستودع عام ولا تشاركه */
+const CFG={bin:'6aa52cb5ffd5d16053fda8e5',key:'$2a$10$6czVNkj5jGC07.YpX7UsXeJAeWPIo2TjzGB7bT2A0AfufiephGPcG'};
+let LAST='',TM=null,ONLINE=false;
+const snap=()=>JSON.stringify({users:S.users,wd:S.wd,log:S.log,settings:S.settings,seq:S.seq,tasks:TASKS});
+let HDR='X-Master-Key';
+async function jb(m,b){for(const h of [HDR,HDR==='X-Master-Key'?'X-Access-Key':'X-Master-Key']){
+ const r=await fetch('https://api.jsonbin.io/v3/b/'+CFG.bin+(m==='GET'?'/latest':''),{method:m,headers:{'Content-Type':'application/json','X-Bin-Meta':'false',[h]:CFG.key},body:b});
+ if(r.status===401||r.status===403)continue;if(!r.ok)throw new Error(r.status);HDR=h;return r.json()}throw new Error(401)}
+function save(){if(!ONLINE)return;clearTimeout(TM);TM=setTimeout(async()=>{const x=snap();if(x===LAST)return;try{await jb('PUT',x);LAST=x}catch(e){toast('تعذّر حفظ البيانات في JSONBin',false)}},1200)}
+async function boot(){
+ if(CFG.bin&&CFG.key){try{const d=await jb('GET');
+  if(d&&Array.isArray(d.users)){S.users=d.users;S.wd=d.wd||[];S.log=d.log||[];Object.assign(S.settings,d.settings||{});S.seq=d.seq||S.seq;if(Array.isArray(d.tasks)){TASKS.length=0;TASKS.push(...d.tasks)}}
+  else if(!d||Object.keys(d).every(k=>k==='init'))await jb('PUT',snap());else throw new Error('الـ Bin يحتوي بيانات أخرى');
+  LAST=snap();ONLINE=true}catch(e){toast('تعذّر الاتصال بـ JSONBin ('+e.message+')',false)}}
+ render()}
+boot();
+</script>
+</body>
+</html>
+aster Key</option></select>
+<label>المفتاح</label><input id="jb2" type="password" value="${esc(CFG.key||'')}" dir="ltr" required>
+<p><button class="btn">حفظ والاتصال</button> <button type="button" class="btn alt" onclick="localStorage.removeItem('satr_jb');location.reload()">فصل</button></p></form></div>`};
+function saveCfg(e){e.preventDefault();try{localStorage.setItem('satr_jb',JSON.stringify({bin:$('#jb1').value.trim(),key:$('#jb2').value.trim(),type:$('#jb3').value}));location.href=location.pathname+'#home';location.reload()}catch(x){toast('تعذّر حفظ الإعدادات',false)}return false}
+async function boot(){
+ if(CFG.bin&&CFG.key){try{const d=await jb('GET');
+  if(d&&Array.isArray(d.users)){S.users=d.users;S.wd=d.wd||[];S.log=d.log||[];Object.assign(S.settings,d.settings||{});S.seq=d.seq||S.seq;if(Array.isArray(d.tasks)){TASKS.length=0;TASKS.push(...d.tasks)}}
+  else await jb('PUT',snap());
+  LAST=snap();ONLINE=true}catch(e){toast('تعذّر الاتصال بـ JSONBin، تحقق من الإعدادات',false)}}
+ render()}
+boot();
+</script>
+</body>
+</html>
+Context('2d');
+  var confettiParticles = [];
+  var confettiRAF = null;
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  function cssVar(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+
+  function fireConfetti() {
+    var colors = [cssVar('--accent'), cssVar('--signal'), '#F3EFE5', cssVar('--danger')];
+    var originX = window.innerWidth / 2;
+    var originY = Math.min(window.innerHeight * 0.32, 260);
+    var count = 90;
+
+    for (var i = 0; i < count; i++) {
+      var angle = Math.random() * Math.PI * 2;
+      var speed = 3 + Math.random() * 6;
+      confettiParticles.push({
+        x: originX,
+        y: originY,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 3,
+        size: 5 + Math.random() * 5,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        rotation: Math.random() * Math.PI,
+        rotSpeed: (Math.random() - 0.5) * 0.3,
+        life: 0,
+        maxLife: 70 + Math.random() * 40,
+        shape: Math.random() > 0.5 ? 'rect' : 'circle'
+      });
+    }
+
+    if (!confettiRAF) { animateConfetti(); }
+  }
+
+  function animateConfetti() {
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    var stillAlive = false;
+
+    for (var i = confettiParticles.length - 1; i >= 0; i--) {
+      var p = confettiParticles[i];
+      p.life++;
+      if (p.life > p.maxLife) { confettiParticles.splice(i, 1); continue; }
+      stillAlive = true;
+
+      p.vy += 0.14;
+      p.vx *= 0.99;
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rotation += p.rotSpeed;
+
+      var fade = 1 - p.life / p.maxLife;
+      ctx.save();
+      ctx.globalAlpha = Math.max(fade, 0);
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rotation);
+      ctx.fillStyle = p.color;
+      if (p.shape === 'rect') {
+        ctx.fillRect(-p.size / 2, -p.size / 3, p.size, p.size * 0.66);
+      } else {
+        ctx.beginPath();
+        ctx.arc(0, 0, p.size / 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    if (stillAlive) {
+      confettiRAF = requestAnimationFrame(animateConfetti);
+    } else {
+      confettiRAF = null;
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    }
+  }
+
+  function fireBurstRings() {
+    for (var i = 0; i < 3; i++) {
+      (function (delay) {
+        setTimeout(function () {
+          var ring = document.createElement('div');
+          ring.className = 'burst-ring';
+          radarStage.appendChild(ring);
+          requestAnimationFrame(function () { ring.classList.add('go'); });
+          setTimeout(function () { ring.remove(); }, 1000);
+        }, delay);
+      })(i * 160);
+    }
+  }
+
+  function render() {
+    chipList.innerHTML = '';
+    if (names.length === 0) {
+      emptyNote.style.display = 'block';
+    } else {
+      emptyNote.style.display = 'none';
+      names.forEach(function (n, i) {
+        var li = document.createElement('li');
+        li.className = 'chip';
+        var span = document.createElement('span');
+        span.textContent = n;
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.setAttribute('aria-label', 'حذف ' + n);
+        btn.textContent = '×';
+        btn.addEventListener('click', function () {
+          names.splice(i, 1);
+          safeSet(STORE_NAMES, names);
+          render();
+        });
+        li.appendChild(span);
+        li.appendChild(btn);
+        chipList.appendChild(li);
+      });
+    }
+    participantCount.textContent = names.length;
+    drawBtn.disabled = names.length === 0 || isDrawing;
+
+    if (history.length === 0) {
+      historyCard.style.display = 'none';
+    } else {
+      historyCard.style.display = 'block';
+      historyList.innerHTML = '';
+      history.slice().reverse().forEach(function (h) {
+        var li = document.createElement('li');
+        li.className = 'history-item';
+        var nameSpan = document.createElement('span');
+        nameSpan.className = 'name';
+        nameSpan.textContent = h.name;
+        var timeSpan = document.createElement('span');
+        timeSpan.className = 'time';
+        timeSpan.textContent = h.time;
+        li.appendChild(nameSpan);
+        li.appendChild(timeSpan);
+        historyList.appendChild(li);
+      });
+    }
+  }
+
+  function addName(raw) {
+    var n = raw.trim();
+    if (!n) return;
+    names.push(n);
+  }
+
+  addBtn.addEventListener('click', function () {
+    addName(nameInput.value);
+    nameInput.value = '';
+    safeSet(STORE_NAMES, names);
+    render();
+    nameInput.focus();
+  });
+  nameInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { addBtn.click(); }
+  });
+
+  bulkToggle.addEventListener('click', function () {
+    var showing = bulkArea.style.display !== 'none';
+    bulkArea.style.display = showing ? 'none' : 'block';
+    bulkToggle.textContent = showing ? 'لصق عدة أسماء دفعة واحدة' : 'إخفاء';
+  });
+
+  bulkAddBtn.addEventListener('click', function () {
+    var lines = bulkInput.value.split('\n');
+    lines.forEach(addName);
+    bulkInput.value = '';
+    safeSet(STORE_NAMES, names);
+    render();
+  });
+
+  function armConfirm(btn, idleLabel, confirmLabel, onConfirm) {
+    var armed = false;
+    var timer = null;
+    btn.textContent = idleLabel;
+    btn.addEventListener('click', function () {
+      if (!armed) {
+        armed = true;
+        btn.textContent = confirmLabel;
+        btn.classList.add('confirming');
+        timer = setTimeout(function () {
+          armed = false;
+          btn.textContent = idleLabel;
+          btn.classList.remove('confirming');
+        }, 3000);
+      } else {
+        clearTimeout(timer);
+        armed = false;
+        btn.textContent = idleLabel;
+        btn.classList.remove('confirming');
+        onConfirm();
+      }
+    });
+  }
+
+  armConfirm(clearAllBtn, 'حذف كل الأسماء', 'اضغط مرة أخرى للتأكيد', function () {
+    names = [];
+    safeSet(STORE_NAMES, names);
+    render();
+  });
+
+  armConfirm(clearHistoryBtn, 'مسح السجل', 'اضغط مرة أخرى للتأكيد', function () {
+    history = [];
+    safeSet(STORE_HISTORY, history);
+    render();
+  });
+
+  function formatTime() {
+    try {
+      return new Date().toLocaleString('ar', { hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'short' });
+    } catch (e) {
+      return new Date().toLocaleString();
+    }
+  }
+
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  drawBtn.addEventListener('click', function () {
+    if (isDrawing || names.length === 0) return;
+
+    var eligible = names.slice();
+    if (noRepeatToggle.checked) {
+      var pastWinners = history.map(function (h) { return h.name; });
+      var filtered = eligible.filter(function (n) { return pastWinners.indexOf(n) === -1; });
+      if (filtered.length > 0) { eligible = filtered; }
+    }
+    if (eligible.length === 0) {
+      liveRegion.textContent = 'كل الأسماء فازت سابقًا';
+      return;
+    }
+
+    isDrawing = true;
+    drawBtn.disabled = true;
+    radarStage.classList.remove('idle', 'done');
+    radarStage.classList.add('drawing');
+
+    var listLen = eligible.length;
+    var winnerIndex = Math.floor(Math.random() * listLen);
+    var winner = eligible[winnerIndex];
+
+    function finishDraw() {
+      radarText.textContent = winner;
+      radarStage.classList.remove('drawing');
+      radarStage.classList.add('done');
+      liveRegion.textContent = 'الفائز هو ' + winner;
+
+      fireBurstRings();
+      if (!reduceMotion) { fireConfetti(); }
+
+      history.push({ name: winner, time: formatTime() });
+      safeSet(STORE_HISTORY, history);
+
+      if (removeWinnerToggle.checked) {
+        var idx = names.indexOf(winner);
+        if (idx > -1) { names.splice(idx, 1); }
+        safeSet(STORE_NAMES, names);
+      }
+
+      isDrawing = false;
+      render();
+    }
+
+    if (reduceMotion || listLen === 1) {
+      radarText.textContent = eligible[0];
+      setTimeout(finishDraw, 250);
+      return;
+    }
+
+    var READ_DELAY_MIN = 35;
+    var READ_DELAY_MAX = 260;
+    var READ_BUDGET_MS = 2400; // target time for the first full first-to-last pass
+    var READ_DELAY = Math.max(READ_DELAY_MIN, Math.min(READ_DELAY_MAX, READ_BUDGET_MS / listLen));
+
+    var MIN_DELAY = 45;     // fastest point, mid-spin
+    var END_DELAY = 560;    // slowest point, right before it stops
+
+    // enough loops that small lists still feel like a real spin, without making
+    // large lists take forever
+    var totalLoops;
+    if (listLen <= 3) { totalLoops = 7; }
+    else if (listLen <= 8) { totalLoops = 5; }
+    else if (listLen <= 20) { totalLoops = 4; }
+    else { totalLoops = 2; }
+
+    var totalSteps = totalLoops * listLen + winnerIndex + 1;
+
+    var readSteps = listLen; // one full realistic pass through the list first
+    var remaining = totalSteps - readSteps;
+    var accelSteps = Math.floor(remaining / 2);
+    var decelSteps = remaining - accelSteps;
+
+    function easeInQuad(t) { return t * t; }
+    function easeInCubic(t) { return t * t * t; }
+
+    function delayForStep(k) {
+      if (k < readSteps) { return READ_DELAY; }
+      var k2 = k - readSteps;
+      if (k2 < accelSteps) {
+        var t = accelSteps > 1 ? k2 / (accelSteps - 1) : 1;
+        return READ_DELAY + (MIN_DELAY - READ_DELAY) * easeInQuad(t);
+      }
+      var k3 = k2 - accelSteps;
+      var t2 = decelSteps > 1 ? k3 / (decelSteps - 1) : 1;
+      return MIN_DELAY + (END_DELAY - MIN_DELAY) * easeInCubic(t2);
+    }
+
+    function step(k) {
+      var idx = k % listLen;
+      radarText.textContent = eligible[idx];
+      if (k >= totalSteps - 1) {
+        setTimeout(finishDraw, 260);
+        return;
+      }
+      setTimeout(function () { step(k + 1); }, delayForStep(k));
+    }
+
+    step(0);
+  });
+
+  themeToggle.addEventListener('click', function () {
+    var current = document.documentElement.getAttribute('data-theme');
+    var next = current === 'light' ? 'dark' : (current === 'dark' ? null : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'light' : 'dark'));
+    if (next) {
+      document.documentElement.setAttribute('data-theme', next);
+      safeSet(STORE_THEME, next);
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      try { localStorage.removeItem(STORE_THEME); } catch (e) {}
+    }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
